@@ -163,7 +163,7 @@ func TestCleanup_DeviceTokensCascadeDeleted(t *testing.T) {
 	s := newTestStorage(t)
 
 	insertAccountAt(t, s, "acc1", time.Now().Add(-40*24*time.Hour))
-	if err := s.SaveDeviceToken("acc1", "tok_abc"); err != nil {
+	if err := s.SaveDeviceToken("acc1", "tok_abc", "apns"); err != nil {
 		t.Fatalf("SaveDeviceToken: %v", err)
 	}
 

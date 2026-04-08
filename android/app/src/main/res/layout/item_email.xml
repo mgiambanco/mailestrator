@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:paddingTop="12dp"
+    android:paddingBottom="12dp"
+    android:paddingEnd="16dp">
+
+    <!-- Unread indicator dot -->
+    <View
+        android:id="@+id/view_unread"
+        android:layout_width="6dp"
+        android:layout_height="6dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/bg_unread_badge"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- Sender -->
+    <TextView
+        android:id="@+id/tv_sender"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:textColor="?attr/colorOnSurface"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintStart_toEndOf="@id/view_unread"
+        app:layout_constraintEnd_toStartOf="@id/tv_timestamp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="10dp" />
+
+    <!-- Timestamp -->
+    <TextView
+        android:id="@+id/tv_timestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_sender"
+        app:layout_constraintBaseline_toBaselineOf="@id/tv_sender" />
+
+    <!-- Subject -->
+    <TextView
+        android:id="@+id/tv_subject"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="?attr/colorOnSurface"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintStart_toEndOf="@id/view_unread"
+        app:layout_constraintEnd_toStartOf="@id/iv_attachment"
+        app:layout_constraintTop_toBottomOf="@id/tv_sender" />
+
+    <!-- Paperclip icon -->
+    <ImageView
+        android:id="@+id/iv_attachment"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@android:drawable/ic_menu_save"
+        android:contentDescription="@string/has_attachment"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_subject"
+        app:layout_constraintBottom_toBottomOf="@id/tv_subject" />
+
+    <!-- Preview -->
+    <TextView
+        android:id="@+id/tv_preview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintStart_toEndOf="@id/view_unread"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_subject"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

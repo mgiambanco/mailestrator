@@ -43,6 +43,9 @@ type Config struct {
 	SpamDNSBLs    []string // DNSBL zones to check (empty = disabled)
 	SpamSPF       bool     // enable SPF checks
 	SpamSPFReject bool     // true = reject on SPF fail; false = log only
+
+	// FCM (Android push)
+	FCMServerKey string // Firebase Cloud Messaging server key (v1 legacy key)
 }
 
 func LoadConfig() *Config {
@@ -67,6 +70,7 @@ func LoadConfig() *Config {
 		BackupDir:       getEnv("BACKUP_DIR", "backups"),
 		BackupInterval:  getDuration("BACKUP_INTERVAL", 24*time.Hour),
 		BackupKeep:      getInt("BACKUP_KEEP", 7),
+		FCMServerKey:    getEnv("FCM_SERVER_KEY", ""),
 	}
 }
 

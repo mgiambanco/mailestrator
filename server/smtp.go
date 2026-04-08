@@ -127,15 +127,22 @@ func (s *smtpSession) Data(r io.Reader) error {
 		// Notify WebSocket clients.
 		s.backend.hub.Broadcast(accountID, email)
 
-		// Send APNs push.
+		// Send push notifications (APNs or FCM).
 		go func(accountID string, e *Email) {
 			tokens, err := s.backend.store.GetDeviceTokens(accountID)
 			if err != nil || len(tokens) == 0 {
 				return
 			}
-			for _, token := range tokens {
-				if err := s.backend.push.Send(token, e); err != nil {
-					slog.Error("apns: push failed", "token", token, "err", err)
+			for _, dt := range tokens {
+				switch dt.TokenType {
+				case "fcm":
+					if err := s.backend.push.SendFCM(dt.Token, e); err != nil {
+						slog.Error("fcm: push failed", "token", dt.Token, "err", err)
+					}
+				default: // "apns"
+					if err := s.backend.push.Send(dt.Token, e); err != nil {
+						slog.Error("apns: push failed", "token", dt.Token, "err", err)
+					}
 				}
 			}
 		}(accountID, email)

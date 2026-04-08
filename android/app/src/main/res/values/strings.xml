@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mail</string>
+
+    <!-- Navigation -->
+    <string name="nav_open">Open navigation drawer</string>
+    <string name="nav_close">Close navigation drawer</string>
+
+    <!-- Inbox -->
+    <string name="no_emails">No emails</string>
+    <string name="no_results">No results</string>
+    <string name="no_subject">(no subject)</string>
+    <string name="search">Search</string>
+    <string name="search_hint">Search emails…</string>
+    <string name="load_more">Load more</string>
+    <string name="delete">Delete</string>
+    <string name="has_attachment">Has attachment</string>
+    <string name="new_email">New email</string>
+
+    <!-- Detail -->
+    <string name="attachments">Attachments</string>
+    <string name="attachment_icon">Attachment icon</string>
+    <string name="no_app_for_attachment">No app found to open this file</string>
+    <string name="download_failed">Download failed</string>
+
+    <!-- Sidebar / Accounts -->
+    <string name="new_account">New account</string>
+    <string name="action_copy_address">Copy address</string>
+    <string name="action_rename">Rename</string>
+    <string name="action_clear_label">Clear label</string>
+    <string name="rename_account">Rename account</string>
+    <string name="rename_hint">Label (optional)</string>
+    <string name="save">Save</string>
+    <string name="copied">Address copied</string>
+</resources>

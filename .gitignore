@@ -89,6 +89,34 @@ apns_key.p8
 
 
 # =============================================================================
+# Android
+# =============================================================================
+
+# Gradle build output
+android/.gradle/
+android/app/build/
+android/build/
+
+# Local SDK/NDK configuration (machine-specific)
+android/local.properties
+
+# Firebase config (contains project-specific API keys — get from Firebase console)
+android/app/google-services.json
+
+# Android Studio user files
+android/.idea/
+android/**/*.iml
+android/captures/
+android/.externalNativeBuild/
+android/.cxx/
+
+# Keystore (signing credentials — never commit)
+android/app/*.jks
+android/app/*.keystore
+android/keystore.properties
+
+
+# =============================================================================
 # OS / Editor
 # =============================================================================
 

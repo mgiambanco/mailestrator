@@ -268,12 +268,13 @@ func buildRouter(cfg *Config, store *Storage, hub *Hub, push *PushService) http.
 		accountID := c.Param("id")
 		var body struct {
 			Token string `json:"token" binding:"required"`
+			Type  string `json:"type"` // "apns" (default) or "fcm"
 		}
 		if err := c.ShouldBindJSON(&body); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		if err := store.SaveDeviceToken(accountID, body.Token); err != nil {
+		if err := store.SaveDeviceToken(accountID, body.Token, body.Type); err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}

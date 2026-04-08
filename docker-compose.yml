@@ -41,6 +41,9 @@ services:
       BACKUP_INTERVAL:  ${BACKUP_INTERVAL:-24h}
       BACKUP_KEEP:      ${BACKUP_KEEP:-7}
 
+      # ── FCM (Android push) ──────────────────────────────────────────────────
+      FCM_SERVER_KEY:   ${FCM_SERVER_KEY:-}
+
       # ── Spam filtering ──────────────────────────────────────────────────────
       SPAM_DNSBLS:      ${SPAM_DNSBLS:-zen.spamhaus.org}
       SPAM_SPF:         ${SPAM_SPF:-true}

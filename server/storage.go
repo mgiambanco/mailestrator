@@ -46,6 +46,7 @@ CREATE INDEX IF NOT EXISTS attachments_email_idx ON attachments(email_id);
 CREATE TABLE IF NOT EXISTS device_tokens (
 	account_id TEXT NOT NULL REFERENCES accounts(id) ON DELETE CASCADE,
 	token      TEXT NOT NULL,
+	token_type TEXT NOT NULL DEFAULT 'apns',
 	PRIMARY KEY (account_id, token)
 );
 `
@@ -453,12 +454,21 @@ func (s *Storage) GetAttachmentData(accountID, emailID, attachmentID string) ([]
 	return a.Data, a, nil
 }
 
-func (s *Storage) SaveDeviceToken(accountID, token string) error {
+func (s *Storage) SaveDeviceToken(accountID, token, tokenType string) error {
+	if tokenType == "" {
+		tokenType = "apns"
+	}
 	_, err := s.db.Exec(
-		`INSERT OR REPLACE INTO device_tokens (account_id, token) VALUES (?, ?)`,
-		accountID, token,
+		`INSERT OR REPLACE INTO device_tokens (account_id, token, token_type) VALUES (?, ?, ?)`,
+		accountID, token, tokenType,
 	)
 	return err
+}
+
+// DeviceToken holds a push token together with its platform type.
+type DeviceToken struct {
+	Token     string
+	TokenType string // "apns" or "fcm"
 }
 
 func (s *Storage) RemoveDeviceToken(accountID, token string) error {
@@ -469,22 +479,22 @@ func (s *Storage) RemoveDeviceToken(accountID, token string) error {
 	return err
 }
 
-func (s *Storage) GetDeviceTokens(accountID string) ([]string, error) {
+func (s *Storage) GetDeviceTokens(accountID string) ([]DeviceToken, error) {
 	rows, err := s.db.Query(
-		`SELECT token FROM device_tokens WHERE account_id = ?`, accountID,
+		`SELECT token, token_type FROM device_tokens WHERE account_id = ?`, accountID,
 	)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 
-	var tokens []string
+	var tokens []DeviceToken
 	for rows.Next() {
-		var t string
-		if err := rows.Scan(&t); err != nil {
+		var dt DeviceToken
+		if err := rows.Scan(&dt.Token, &dt.TokenType); err != nil {
 			return nil, err
 		}
-		tokens = append(tokens, t)
+		tokens = append(tokens, dt)
 	}
 	return tokens, rows.Err()
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- Exclude EncryptedSharedPreferences master key and prefs from cloud backup.
+         The keys are device-specific; restoring them to another device would break decryption. -->
+    <exclude domain="sharedpref" path="." />
+    <exclude domain="database" path="." />
+</full-backup-content>
