@@ -1,0 +1,125 @@
+# =============================================================================
+# Go Server
+# =============================================================================
+
+# Compiled binaries
+server/mailserver
+server/mailserver.exe
+server/*.exe
+
+# SQLite database (contains user data — never commit)
+*.db
+*.db-shm
+*.db-wal
+
+# APNs private key (bearer credential — never commit)
+*.p8
+
+# TLS certificates and keys
+*.pem
+*.key
+*.crt
+*.cer
+
+# Go build cache
+server/vendor/
+
+# Environment / secrets files
+.env
+.env.*
+*.env
+
+# Go test artifacts
+server/*.test
+server/coverage.out
+
+# Backup snapshots (runtime-generated, not source)
+backups/
+server/backups/
+
+# Temporary attachment downloads
+/tmp/attachments/
+
+
+# =============================================================================
+# iOS / Xcode
+# =============================================================================
+
+# Generated Xcode project (regenerate with: cd ios && xcodegen generate)
+ios/*.xcodeproj/
+ios/*.xcworkspace/
+ios/MailClient.xcodeproj/
+
+# Build output
+ios/build/
+ios/DerivedData/
+ios/*.xcarchive
+
+# Xcode user-specific files
+ios/*.xcworkspace/xcuserdata/
+ios/*.xcodeproj/xcuserdata/
+ios/*.xcodeproj/project.xcworkspace/xcuserdata/
+
+# Swift Package Manager
+ios/.build/
+ios/checkouts/
+ios/resolved/
+ios/*.resolved
+
+# CocoaPods (if used)
+ios/Pods/
+ios/Podfile.lock
+
+# Carthage (if used)
+ios/Carthage/Build/
+ios/Carthage/Checkouts/
+
+# Fastlane (if used)
+ios/fastlane/report.xml
+ios/fastlane/Preview.html
+ios/fastlane/screenshots/**/*.png
+ios/fastlane/test_output/
+
+# Provisioning profiles and signing (keep in Apple Developer portal, not git)
+ios/*.mobileprovision
+ios/*.provisionprofile
+
+# Docker runtime secrets (APNs key mounted at compose time)
+apns_key.p8
+
+
+# =============================================================================
+# OS / Editor
+# =============================================================================
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# JetBrains / GoLand
+.idea/
+*.iml
+
+# Vim / Emacs
+*.swp
+*.swo
+*~
+\#*\#
+.#*

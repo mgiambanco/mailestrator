@@ -1,0 +1,55 @@
+services:
+  mailserver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "25:25"       # SMTP
+      - "8080:8080"   # REST API / WebSocket
+    volumes:
+      - mail-data:/data
+      - mail-backups:/backups
+      # Mount your APNs .p8 key read-only.
+      # Copy apns_key.p8 next to docker-compose.yml before starting.
+      - ./apns_key.p8:/apns_key.p8:ro
+    environment:
+      # ── Server ──────────────────────────────────────────────────────────────
+      MAIL_DOMAIN:      ${MAIL_DOMAIN:-localhost}
+      MAIL_DB_PATH:     /data/mail.db
+      MAIL_SMTP_ADDR:   :25
+      MAIL_API_ADDR:    :8080
+
+      # ── TLS (optional — uncomment volume mount and these vars) ───────────────
+      # MAIL_TLS_CERT: /certs/fullchain.pem
+      # MAIL_TLS_KEY:  /certs/privkey.pem
+
+      # ── APNs ────────────────────────────────────────────────────────────────
+      APNS_KEY_PATH:    /apns_key.p8
+      APNS_KEY_ID:      ${APNS_KEY_ID:-}
+      APNS_TEAM_ID:     ${APNS_TEAM_ID:-}
+      APNS_BUNDLE_ID:   ${APNS_BUNDLE_ID:-com.example.mailclient}
+      APNS_PRODUCTION:  ${APNS_PRODUCTION:-false}
+
+      # ── TTL cleanup ─────────────────────────────────────────────────────────
+      EMAIL_TTL_DAYS:   ${EMAIL_TTL_DAYS:-7}
+      ACCOUNT_TTL_DAYS: ${ACCOUNT_TTL_DAYS:-30}
+      CLEANUP_INTERVAL: ${CLEANUP_INTERVAL:-24h}
+
+      # ── Backup ──────────────────────────────────────────────────────────────
+      BACKUP_DIR:       /backups
+      BACKUP_INTERVAL:  ${BACKUP_INTERVAL:-24h}
+      BACKUP_KEEP:      ${BACKUP_KEEP:-7}
+
+      # ── Spam filtering ──────────────────────────────────────────────────────
+      SPAM_DNSBLS:      ${SPAM_DNSBLS:-zen.spamhaus.org}
+      SPAM_SPF:         ${SPAM_SPF:-true}
+      SPAM_SPF_REJECT:  ${SPAM_SPF_REJECT:-true}
+
+      # ── Logging ─────────────────────────────────────────────────────────────
+      LOG_FORMAT:       ${LOG_FORMAT:-json}
+      LOG_LEVEL:        ${LOG_LEVEL:-info}
+
+volumes:
+  mail-data:
+  mail-backups:
